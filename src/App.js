@@ -5,6 +5,8 @@ import NavigationBar from './components/NavigationBar';
 import {Container, Row, Jumbotron, Col } from 'react-bootstrap';
 
 import { Navbar, Nav } from "react-bootstrap";
+import NoteList from './components/NoteList';
+import Note from './components/Note';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
             </Col>
           </Row>
         </Container> */}
+        <NoteList/>
+        <Note/>
         <Footer/>
     </div>
   );

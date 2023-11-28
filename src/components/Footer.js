@@ -3,11 +3,12 @@ import {Navbar, Col, Container } from "react-bootstrap";
 
 class Footer extends React.Component {
    render() {
+    let fullYear = new Date().getFullYear();
     return (
         <Navbar fixed="bottom" bg="dark" variant="dark">
             <Container>
                 <Col lg={12} className="text-center text-muted">
-                    <div> Java developer </div>
+                    <div style={{color: "#e0e0e0"}}>{fullYear}-{fullYear+1}, All Rights Reserved</div>
                 </Col>
             </Container>
         </Navbar>
