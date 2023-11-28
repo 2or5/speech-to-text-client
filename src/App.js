@@ -1,32 +1,28 @@
 import './App.css';
 import Footer from './components/Footer';
 import NavigationBar from './components/NavigationBar';
-
 import {Container, Row, Jumbotron, Col } from 'react-bootstrap';
-
-import { Navbar, Nav } from "react-bootstrap";
 import NoteList from './components/NoteList';
 import Note from './components/Note';
+import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import Welcome from './components/Welcome';
 
 
 function App() {
   return (
-    <div className="App">
+    <Router>
       <NavigationBar/>
-        {/* <Container>
+        <Container>
           <Row>
-            <Col lg={12} style={marginTop}>
-              <Jumbotron>
-                <h1>Hello</h1>
-                <p>This is simple </p>
-              </Jumbotron>
+            <Col lg={12}>
+                  <Welcome/>
             </Col>
           </Row>
-        </Container> */}
+        </Container>
         <NoteList/>
         <Note/>
         <Footer/>
-    </div>
+    </Router>
   );
 }
 
