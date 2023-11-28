@@ -1,10 +1,10 @@
 import './App.css';
 import Footer from './components/Footer';
 import NavigationBar from './components/NavigationBar';
-import {Container, Row, Jumbotron, Col } from 'react-bootstrap';
+import {Container, Row, Col } from 'react-bootstrap';
 import NoteList from './components/NoteList';
 import Note from './components/Note';
-import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Welcome from './components/Welcome';
 
 
@@ -15,13 +15,15 @@ function App() {
         <Container>
           <Row>
             <Col lg={12}>
-                  <Welcome/>
+               <Routes>
+                  <Route path='/' Component={Welcome}/>
+                  <Route path='/list' Component={NoteList}/>
+                  <Route path='/add' Component={Note}/>
+                </Routes>  
             </Col>
           </Row>
         </Container>
-        <NoteList/>
-        <Note/>
-        <Footer/>
+      <Footer/>
     </Router>
   );
 }
