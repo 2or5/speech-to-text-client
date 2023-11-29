@@ -1,10 +1,30 @@
-import React from "react";
+import React, {Component} from "react";
+import { Card, Table } from "react-bootstrap";
 
-class NoteList extends React.Component {
+export default class NoteList extends Component {
         render () {
-            return (<div className="text-white">Note List</div>)
+            return (
+                <Card className="border border-dark bg-dark text-white">
+                    <Card.Header>Your Notes</Card.Header>
+                    <Card.Body>
+                        <Table bordered hover striped variant="dark">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr align="center">
+                                    <td colSpan={6}>No Notes Avalible.</td>
+                                </tr>
+                            </tbody>
+                        </Table>
+                    </Card.Body>
+
+                </Card>
+            )
         }
 
 }
-
-export default NoteList;
