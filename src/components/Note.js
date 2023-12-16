@@ -5,6 +5,7 @@ import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import CreateNoteToast from "./CreateNoteToast";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class Note extends Component {
@@ -17,6 +18,7 @@ export default class Note extends Component {
   constructor(props){
     super(props);
     this.state = this.state;
+    this.state.show = false;
     this.noteChange = this.noteChange.bind(this);
     this.submitNote = this.submitNote.bind(this);
   }
@@ -45,10 +47,13 @@ export default class Note extends Component {
 
     axios.post("http://localhost:8080/notes/create-note", note).then(response => {
       if(response.data != null){
-        this.setState({title:'', isRecording: false, blobURL:'', baseAudio:''});
-        alert("Note Saved");
+        this.setState({"show":true});
+        setTimeout(() =>this.setState({"show":false}), 3000);
+      } else {
+        this.setState({"show":false});
       }
     });
+    this.setState({title:'', isRecording: false, blobURL:'', baseAudio:''});
   }
 
   componentDidMount() {
@@ -104,7 +109,11 @@ export default class Note extends Component {
 
   render() {
     return (
-      <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
+      <div>
+        <div style={{"display":this.state.show ? "block" : "none"}}> 
+          <CreateNoteToast children = {{show:this.state.show, message:"Note Saved Successfully."}}/>
+        </div>
+        <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
         <Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add your notation</Card.Header>
         <Form onReset={this.resetNote} onSubmit={this.submitNote} id="noteFormId">
           <Card.Body>
@@ -146,6 +155,7 @@ export default class Note extends Component {
           </Card.Footer>
         </Form>
       </Card>
+      </div>
     );
   }
 }
