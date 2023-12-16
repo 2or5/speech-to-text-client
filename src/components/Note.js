@@ -9,6 +9,11 @@ const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class Note extends Component {
 
+  state = {
+    title: "",
+    baseAudio: "", // Move the declaration to the class level
+  };
+
   constructor(props){
     super(props);
     this.state = {title: ''};
@@ -16,12 +21,20 @@ export default class Note extends Component {
     this.submitNote = this.submitNote.bind(this);
   }
 
-  submitNote(event) {
+  submitNote = event => {
     alert('Title' + this.state.title + 'record' + this.state.record + 'StopRecord' + this.state.stopRecord);
     event.preventDefault();
+
+    const note = {
+      userId:"651c61e6de1460284ddef65b",
+      name: this.state.title,
+      base64: this.state.baseAudio
+    };
+
+    axios.post("http://localhost:8080/notes/create-note", note)
   }
 
-  noteChange(event) {
+  noteChange = event => {
     this.setState({
       [event.target.name]:event.target.value
     });
@@ -71,13 +84,7 @@ export default class Note extends Component {
         });
         let baseAudio = await this.audioToBase64(file);
         console.log("Base audio ====>", baseAudio);
-        const newNote = {
-          userId: "6578a51cbafaa44205a6b6f1",
-          base64: baseAudio,
-          name: "test",
-        };
-        axios.post("http://localhost:8080/notes/create-note", newNote);
-        this.setState({ blobURL, isRecording: false });
+        this.setState({ blobURL, isRecording: false, baseAudio});
       })
       .catch((e) => console.log(e));
   };
