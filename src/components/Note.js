@@ -40,7 +40,7 @@ export default class Note extends Component {
     event.preventDefault();
 
     const note = {
-      userId:"651c61e6de1460284ddef65b",
+      userId:"655c9aec3fb6d830f5b54aa5",
       name: this.state.title,
       base64: this.state.baseAudio
     };
@@ -48,7 +48,7 @@ export default class Note extends Component {
     axios.post("http://localhost:8080/notes/create-note", note).then(response => {
       if(response.data != null){
         this.setState({"show":true});
-        setTimeout(() =>this.setState({"show":false}), 3000);
+        setTimeout(() =>this.setState({"show":false}), 6000);
       } else {
         this.setState({"show":false});
       }
@@ -111,7 +111,7 @@ export default class Note extends Component {
     return (
       <div>
         <div style={{"display":this.state.show ? "block" : "none"}}> 
-          <CreateNoteToast children = {{show:this.state.show, message:"Note Saved Successfully."}}/>
+          <CreateNoteToast children = {{show:this.state.show, message:"Note Saved Successfully.", type: "success"}}/>
         </div>
         <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
         <Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add your notation</Card.Header>
