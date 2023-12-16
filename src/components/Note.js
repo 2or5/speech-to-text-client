@@ -11,27 +11,14 @@ export default class Note extends Component {
 
   state = {
     title: "",
-    baseAudio: "", // Move the declaration to the class level
+    baseAudio: "",
   };
 
   constructor(props){
     super(props);
-    this.state = {title: ''};
+    this.state = this.state;
     this.noteChange = this.noteChange.bind(this);
     this.submitNote = this.submitNote.bind(this);
-  }
-
-  submitNote = event => {
-    alert('Title' + this.state.title + 'record' + this.state.record + 'StopRecord' + this.state.stopRecord);
-    event.preventDefault();
-
-    const note = {
-      userId:"651c61e6de1460284ddef65b",
-      name: this.state.title,
-      base64: this.state.baseAudio
-    };
-
-    axios.post("http://localhost:8080/notes/create-note", note)
   }
 
   noteChange = event => {
@@ -46,6 +33,23 @@ export default class Note extends Component {
     blobUrl: "",
     isBlocked: false,
   };
+  
+  submitNote = event => {
+    event.preventDefault();
+
+    const note = {
+      userId:"651c61e6de1460284ddef65b",
+      name: this.state.title,
+      base64: this.state.baseAudio
+    };
+
+    axios.post("http://localhost:8080/notes/create-note", note).then(response => {
+      if(response.data != null){
+        this.setState({title:'', isRecording: false, blobURL:'', baseAudio:''});
+        alert("Note Saved");
+      }
+    });
+  }
 
   componentDidMount() {
     navigator.getUserMedia(
@@ -102,7 +106,7 @@ export default class Note extends Component {
     return (
       <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
         <Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add your notation</Card.Header>
-        <Form onSubmit={this.submitNote} id="noteFormId">
+        <Form onReset={this.resetNote} onSubmit={this.submitNote} id="noteFormId">
           <Card.Body>
             <Form.Group>
               <Form.Label>Title note</Form.Label>
