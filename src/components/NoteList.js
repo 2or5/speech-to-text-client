@@ -2,6 +2,7 @@ import { faEdit, faList, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import CreateNoteToast from "./CreateNoteToast";
+import { Link } from "react-router-dom";
 import { Button, ButtonGroup, Card, Table } from "react-bootstrap";
 import axios from "axios";
 
@@ -77,14 +78,13 @@ export default class NoteList extends Component {
                       <td>{notes.date}</td>
                       <td>
                         <ButtonGroup>
-                          <Button size="sm" variant="outline-primary">
+                          <Link to={"/edit/" + notes.id} className="btn btn-sm btn-outline-primary">
                             <FontAwesomeIcon icon={faEdit} />
-                          </Button>{" "}
+                          </Link>
                           <Button
                             size="sm"
                             variant="outline-danger"
-                            onClick={this.deleteNote.bind(this, notes.id)}
-                          >
+                            onClick={this.deleteNote.bind(this, notes.id)}>
                             <FontAwesomeIcon icon={faTrash} />
                           </Button>{" "}
                         </ButtonGroup>

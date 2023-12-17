@@ -16,9 +16,10 @@ function App() {
           <Row>
             <Col lg={12}>
                <Routes>
-                  <Route path='/' Component={Welcome}/>
-                  <Route path='/list' Component={NoteList}/>
-                  <Route path='/add' Component={Note}/>
+                  <Route path="/"  Component={Welcome}/>
+                  <Route path="/add"  Component={Note}/>
+                  <Route path="/edit/:id" Component={Note} />
+                  <Route path="/list" Component={NoteList}/>
                 </Routes>  
             </Col>
           </Row>
