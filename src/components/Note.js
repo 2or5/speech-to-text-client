@@ -15,7 +15,7 @@ export default class Note extends Component {
     baseAudio: "",
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = this.state;
     this.state.show = false;
@@ -25,7 +25,7 @@ export default class Note extends Component {
 
   noteChange = event => {
     this.setState({
-      [event.target.name]:event.target.value
+      [event.target.name]: event.target.value
     });
     event.preventDefault();
   }
@@ -35,25 +35,25 @@ export default class Note extends Component {
     blobUrl: "",
     isBlocked: false,
   };
-  
+
   submitNote = event => {
     event.preventDefault();
 
     const note = {
-      userId:"655c9aec3fb6d830f5b54aa5",
+      userId: "651c61e6de1460284ddef65b",
       name: this.state.title,
       base64: this.state.baseAudio
     };
 
     axios.post("http://localhost:8080/notes/create-note", note).then(response => {
-      if(response.data != null){
-        this.setState({"show":true});
-        setTimeout(() =>this.setState({"show":false}), 6000);
+      if (response.data != null) {
+        this.setState({ "show": true });
+        setTimeout(() => this.setState({ "show": false }), 6000);
       } else {
-        this.setState({"show":false});
+        this.setState({ "show": false });
       }
     });
-    this.setState({title:'', isRecording: false, blobURL:'', baseAudio:''});
+    this.setState({ title: '', isRecording: false, blobURL: '', baseAudio: '' });
   }
 
   componentDidMount() {
@@ -93,7 +93,7 @@ export default class Note extends Component {
         });
         let baseAudio = await this.audioToBase64(file);
         console.log("Base audio ====>", baseAudio);
-        this.setState({ blobURL, isRecording: false, baseAudio});
+        this.setState({ blobURL, isRecording: false, baseAudio });
       })
       .catch((e) => console.log(e));
   };
@@ -110,51 +110,54 @@ export default class Note extends Component {
   render() {
     return (
       <div>
-        <div style={{"display":this.state.show ? "block" : "none"}}> 
-          <CreateNoteToast children = {{show:this.state.show, message:"Note Saved Successfully.", type: "success"}}/>
+        <div style={{ "display": this.state.show ? "block" : "none" }}>
+          <CreateNoteToast children={{ show: this.state.show, message: "Note Saved Successfully.", type: "success" }} />
         </div>
         <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
-        <Card.Header><FontAwesomeIcon icon={faPlusSquare}/> Add your notation</Card.Header>
-        <Form onReset={this.resetNote} onSubmit={this.submitNote} id="noteFormId">
-          <Card.Body>
-            <Form.Group>
-              <Form.Label>Title note</Form.Label>
-              <Form.Control required
-                type="test"
-                name="title"
-                value={this.state.title}
-                onChange={this.noteChange}
-                className={"bg-dark text-white"}
-                placeholder="Here enter your note name"
-              />
-            </Form.Group>
-            <Form.Group>
+          <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add your notation</Card.Header>
+          <Form onReset={this.resetNote} onSubmit={this.submitNote} id="noteFormId">
+            <Card.Body>
+              <Form.Group style={{ textAlign: 'center' }}>
+                <Form.Label style={{ marginBottom: '10px', display: 'block' }}>Title Note</Form.Label>
+                <Form.Control required
+                  type="text"
+                  name="title"
+                  value={this.state.title}
+                  onChange={this.noteChange}
+                  className={"bg-dark text-white"}
+                  style={{ width: '660px', height: '38px', margin: 'auto' }}
+                  placeholder="Here enter your note name"
+                />
+              </Form.Group>
+              <Form.Group style={{ marginTop: '35px' }}>
+                <audio style={{ margin: 'auto', display: 'block', color: 'black' }} src={this.state.blobURL} controls="controls" />
                 <Button name="record"
-                value={this.state.record}
-                onChange={this.noteChange}
-                  className="h-16 w-16 rounded-full border-4 border-gray-400"
+                  style={{ borderRadius: '45%', marginLeft: '230px', marginTop: '25px', width: '250px', height: '50px' }}
+                  value={this.state.record}
+                  onChange={this.noteChange}
+                  variant="light"
                   onClick={this.start}
                   disabled={this.state.isRecording}
                 >
                   Record
                 </Button>
                 <Button name="stopRecord"
-                  className="h-16 w-16 rounded-full border-4 border-gray-400"
+                  variant="light"
+                  style={{ borderRadius: '45%', marginLeft: '100px', marginTop: '25px', width: '250px', height: '50px' }}
                   onClick={this.stop}
                   disabled={!this.state.isRecording}
                 >
                   Stop
                 </Button>
-                <audio src={this.state.blobURL} controls="controls" />
-            </Form.Group>
-          </Card.Body>
-          <Card.Footer>
-            <Button size="sm" variant="success" type="submit">
-              Submit
-            </Button>
-          </Card.Footer>
-        </Form>
-      </Card>
+              </Form.Group>
+            </Card.Body>
+            <Card.Footer>
+              <Button variant="light" type="submit" style={{ width: '150px', height: '39px', marginLeft: 'auto', display: 'block' }}>
+                Send
+              </Button>
+            </Card.Footer>
+          </Form>
+        </Card>
       </div>
     );
   }
