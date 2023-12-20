@@ -4,12 +4,15 @@ import MicRecorder from "mic-recorder-to-mp3";
 import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPaperPlane,
+  faPlus,
+  faPlusSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import CreateNoteToast from "./CreateNoteToast";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export default class Note extends Component {
-
   state = {
     title: "",
     baseAudio: "",
@@ -23,12 +26,12 @@ export default class Note extends Component {
     this.submitNote = this.submitNote.bind(this);
   }
 
-  noteChange = event => {
+  noteChange = (event) => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
     });
     event.preventDefault();
-  }
+  };
 
   state = {
     isRecording: false,
@@ -36,25 +39,32 @@ export default class Note extends Component {
     isBlocked: false,
   };
 
-  submitNote = event => {
+  submitNote = (event) => {
     event.preventDefault();
 
     const note = {
-      userId: "651c61e6de1460284ddef65b",
+      userId: "65549678dcc07762fc7b5200",
       name: this.state.title,
-      base64: this.state.baseAudio
+      base64: this.state.baseAudio,
     };
 
-    axios.post("http://localhost:8080/notes/create-note", note).then(response => {
-      if (response.data != null) {
-        this.setState({ "show": true });
-        setTimeout(() => this.setState({ "show": false }), 6000);
-      } else {
-        this.setState({ "show": false });
-      }
+    axios
+      .post("http://localhost:8080/notes/create-note", note)
+      .then((response) => {
+        if (response.data != null) {
+          this.setState({ show: true });
+          setTimeout(() => this.setState({ show: false }), 6000);
+        } else {
+          this.setState({ show: false });
+        }
+      });
+    this.setState({
+      title: "",
+      isRecording: false,
+      blobURL: "",
+      baseAudio: "",
     });
-    this.setState({ title: '', isRecording: false, blobURL: '', baseAudio: '' });
-  }
+  };
 
   componentDidMount() {
     navigator.getUserMedia(
@@ -110,29 +120,57 @@ export default class Note extends Component {
   render() {
     return (
       <div>
-        <div style={{ "display": this.state.show ? "block" : "none" }}>
-          <CreateNoteToast children={{ show: this.state.show, message: "Note Saved Successfully.", type: "success" }} />
+        <div style={{ display: this.state.show ? "block" : "none" }}>
+          <CreateNoteToast
+            children={{
+              show: this.state.show,
+              message: "Note Saved Successfully.",
+              type: "success",
+            }}
+          />
         </div>
-        <Card className={"border border-dark bg-dark text-white"} style={{ marginTop: '37px' }}>
-          <Card.Header><FontAwesomeIcon icon={faPlusSquare} /> Add your notation</Card.Header>
-          <Form onReset={this.resetNote} onSubmit={this.submitNote} id="noteFormId">
+        <Card
+          className={"border border-dark bg-dark text-white"}
+          style={{ marginTop: "37px" }}
+        >
+          <Card.Header>
+            <FontAwesomeIcon icon={faPlusSquare} /> Add your notation
+          </Card.Header>
+          <Form
+            onReset={this.resetNote}
+            onSubmit={this.submitNote}
+            id="noteFormId"
+          >
             <Card.Body>
-              <Form.Group style={{ textAlign: 'center' }}>
-                <Form.Label style={{ marginBottom: '10px', display: 'block' }}>Title Note</Form.Label>
-                <Form.Control required
+              <Form.Group style={{ textAlign: "center" }}>
+                <Form.Label style={{ marginBottom: "10px", display: "block" }}>
+                  Title Note
+                </Form.Label>
+                <Form.Control
+                  required
                   type="text"
                   name="title"
                   value={this.state.title}
                   onChange={this.noteChange}
                   className={"bg-dark text-white"}
-                  style={{ width: '660px', height: '38px', margin: 'auto' }}
+                  style={{ width: "660px", height: "38px", margin: "auto" }}
                   placeholder="Here enter your note name"
                 />
               </Form.Group>
-              <Form.Group style={{ marginTop: '35px' }}>
-                <audio style={{ margin: 'auto', display: 'block', color: 'black' }} src={this.state.blobURL} controls="controls" />
-                <Button name="record"
-                  style={{ borderRadius: '45%', marginLeft: '230px', marginTop: '25px', width: '250px', height: '50px' }}
+              <Form.Group style={{ marginTop: "35px", textAlign: "center" }}>
+                <audio
+                  style={{ margin: "auto", display: "block", color: "black" }}
+                  src={this.state.blobURL}
+                  controls="controls"
+                />
+                <Button
+                  name="record"
+                  style={{
+                    borderRadius: "45%",
+                    marginTop: "25px",
+                    width: "250px",
+                    height: "50px",
+                  }}
                   value={this.state.record}
                   onChange={this.noteChange}
                   variant="light"
@@ -141,9 +179,15 @@ export default class Note extends Component {
                 >
                   Record
                 </Button>
-                <Button name="stopRecord"
+                <Button
+                  name="stopRecord"
                   variant="light"
-                  style={{ borderRadius: '45%', marginLeft: '100px', marginTop: '25px', width: '250px', height: '50px' }}
+                  style={{
+                    borderRadius: "45%",
+                    marginTop: "25px",
+                    width: "250px",
+                    height: "50px",
+                  }}
                   onClick={this.stop}
                   disabled={!this.state.isRecording}
                 >
@@ -152,8 +196,17 @@ export default class Note extends Component {
               </Form.Group>
             </Card.Body>
             <Card.Footer>
-              <Button variant="light" type="submit" style={{ width: '150px', height: '39px', marginLeft: 'auto', display: 'block' }}>
-                Send
+              <Button
+                variant="light"
+                type="submit"
+                style={{
+                  width: "150px",
+                  height: "39px",
+                  marginLeft: "auto",
+                  display: "block",
+                }}
+              >
+                <FontAwesomeIcon icon={faPaperPlane} /> Send
               </Button>
             </Card.Footer>
           </Form>
