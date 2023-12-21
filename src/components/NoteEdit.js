@@ -1,13 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEdit,
-  faPlusSquare,
-  faSave,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faSave } from "@fortawesome/free-solid-svg-icons";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const NoteEdit = () => {
   const { id } = useParams();

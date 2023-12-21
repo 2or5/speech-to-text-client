@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Welcome from "./components/Welcome";
 import NoteEdit from "./components/NoteEdit";
 
-function App() {
+export default function App() {
   return (
     <Router>
       <NavigationBar />
@@ -29,4 +29,3 @@ function App() {
   );
 }
 
-export default App;

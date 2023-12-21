@@ -15,9 +15,12 @@ export default class NoteList extends Component {
   }
 
   componentDidMount() {
-    axios
-      .get("http://localhost:8080/notes")
-      .then((response) => response.data)
+    this.getAllNotes();
+  }
+
+  getAllNotes() {
+    fetch("http://localhost:8080/notes")
+      .then((response) => response.json())
       .then((data) => {
         this.setState({ notes: data });
       });
@@ -47,11 +50,14 @@ export default class NoteList extends Component {
             children={{
               show: this.state.show,
               message: "Note Deleted Successfully.",
-              type: "danger"
+              type: "danger",
             }}
           />
         </div>
-        <Card className="border border-dark bg-dark text-white">
+        <Card
+          className="border border-dark bg-dark text-white"
+          style={{ marginTop: "37px" }}
+        >
           <Card.Header>
             <FontAwesomeIcon icon={faList} /> Your Notes
           </Card.Header>
@@ -78,13 +84,17 @@ export default class NoteList extends Component {
                       <td>{notes.date}</td>
                       <td>
                         <ButtonGroup>
-                          <Link to={"/edit/" + notes.id} className="btn btn-sm btn-outline-primary">
+                          <Link
+                            to={"/edit/" + notes.id}
+                            className="btn btn-sm btn-outline-primary"
+                          >
                             <FontAwesomeIcon icon={faEdit} />
                           </Link>
                           <Button
                             size="sm"
                             variant="outline-danger"
-                            onClick={this.deleteNote.bind(this, notes.id)}>
+                            onClick={this.deleteNote.bind(this, notes.id)}
+                          >
                             <FontAwesomeIcon icon={faTrash} />
                           </Button>{" "}
                         </ButtonGroup>

@@ -131,8 +131,7 @@ export default class Note extends Component {
         </div>
         <Card
           className={"border border-dark bg-dark text-white"}
-          style={{ marginTop: "37px" }}
-        >
+          style={{ marginTop: "37px" }}>
           <Card.Header>
             <FontAwesomeIcon icon={faPlusSquare} /> Add your notation
           </Card.Header>
