@@ -19,7 +19,7 @@ export default class NoteList extends Component {
   }
 
   getAllNotes() {
-    fetch("http://localhost:8080/notes")
+    fetch("http://localhost:8080/notes?size=7&page=0")
       .then((response) => response.json())
       .then((data) => {
         this.setState({ notes: data });

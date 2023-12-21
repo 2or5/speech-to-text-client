@@ -22,6 +22,9 @@ export default function NavigationBar() {
         <Link to={"list"} className="nav-link">
           Note List
         </Link>
+        <Link to={"users"} className="nav-link">
+          User List
+        </Link>
       </Nav>
     </Navbar>
   );
