@@ -15,7 +15,7 @@ export default class UserList extends Component {
     this.state = {
       users: [],
       currentPage: 1,
-      usersPerPage: 4,
+      usersPerPage: 10,
     };
   }
 
@@ -121,7 +121,7 @@ export default class UserList extends Component {
           </Card.Body>
           <Card.Footer>
             <div style={{ float: "left" }}>
-              Showing Page {currentPage} of {totalPages}
+              Showing Page {currentPage} of {Math.ceil(totalPages)}
             </div>
             <div style={{ float: "right" }}>
               <InputGroup>

@@ -7,6 +7,7 @@ import {
   faStepForward,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { format } from 'date-fns';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import CreateNoteToast from "./CreateNoteToast";
@@ -20,7 +21,7 @@ export default class NoteList extends Component {
     this.state = {
       notes: [],
       currentPage: 1,
-      notesPerPage: 7,
+      notesPerPage: 10,
     };
   }
 
@@ -143,7 +144,7 @@ export default class NoteList extends Component {
                     <tr key={notes.id}>
                       <td>{notes.name}</td>
                       <td>{notes.text}</td>
-                      <td>{notes.date}</td>
+                      <td>{format(new Date (notes.date), 'yyyy-MM-dd HH:mm')}</td>
                       <td>
                         <ButtonGroup>
                           <Link
@@ -169,7 +170,7 @@ export default class NoteList extends Component {
           </Card.Body>
           <Card.Footer>
             <div style={{ float: "left" }}>
-              Showing Page {currentPage} of {totalPages}
+              Showing Page {currentPage} of {Math.ceil(totalPages)}
             </div>
             <div style={{ float: "right" }}>
               <InputGroup>
