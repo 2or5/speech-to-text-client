@@ -19,6 +19,10 @@ export default function NavigationBar() {
         <Link to={"users"} className="nav-link">
           User List
         </Link>
+      </Nav> 
+      <Nav className="ms-auto">
+        <Link to={"register"} className="nav-link">Register</Link>
+        <Link to={"login"} className="nav-link">Login</Link>
       </Nav>
     </Navbar>
   );

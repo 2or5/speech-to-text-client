@@ -2,12 +2,14 @@ import "./App.css";
 import Footer from "./components/Footer";
 import NavigationBar from "./components/NavigationBar";
 import { Container, Row, Col } from "react-bootstrap";
-import NoteList from "./components/NoteList";
-import Note from "./components/Note";
+import NoteList from "./components/Note/NoteList";
+import Note from "./components/Note/Note";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Welcome from "./components/Welcome";
-import NoteEdit from "./components/NoteEdit";
-import UserList from "./components/UserList";
+import NoteEdit from "./components/Note/NoteEdit";
+import UserList from "./components/User/UserList";
+import Register from "./components/User/Register";
+import Login from "./components/User/Login";
 
 export default function App() {
   return (
@@ -22,6 +24,8 @@ export default function App() {
               <Route path="/edit/:id" element={<NoteEdit />} />
               <Route path="/list" element={<NoteList />} />
               <Route path="/users" element={<UserList />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
             </Routes>
           </Col>
         </Row>

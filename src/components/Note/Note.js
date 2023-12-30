@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import AudioRecording from "./AudioRecording/AudioRecording";
+import AudioRecording from "../AudioRecording/AudioRecording";
 import MicRecorder from "mic-recorder-to-mp3";
 import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
