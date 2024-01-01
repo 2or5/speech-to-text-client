@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { request, setAuthHeader  } from "../../api/axiosHelper";
 import {
   faFastBackward,
   faFastForward,
@@ -24,10 +25,12 @@ export default class UserList extends Component {
   }
 
   getAllUsers() {
-    fetch("http://localhost:8080/user/users")
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ users: data });
+    request("GET", "/user/users")
+      .then((response) => {
+        this.setState({ users: response.data });
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
       });
   }
 
