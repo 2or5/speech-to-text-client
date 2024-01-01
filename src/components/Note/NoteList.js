@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import CreateNoteToast from "./CreateNoteToast";
 import { Link } from "react-router-dom";
+import { request, setAuthHeader  } from "../../api/axiosHelper";
 import { Button, ButtonGroup, Card, Table, InputGroup } from "react-bootstrap";
 import axios from "axios";
 
@@ -30,11 +31,13 @@ export default class NoteList extends Component {
   }
 
   getAllNotes() {
-    fetch("http://localhost:8080/notes")
-      .then((response) => response.json())
-      .then((data) => {
-        this.setState({ notes: data });
-      });
+    request("GET", "/notes")
+  .then((response) => {
+    this.setState({ notes: response.data });
+  })
+  .catch((error) => {
+    console.error("Error fetching users:", error);
+  });
   }
 
   deleteNote = (noteId) => {

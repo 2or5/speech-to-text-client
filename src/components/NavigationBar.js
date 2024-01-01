@@ -1,3 +1,5 @@
+import { faCashRegister, faRegistered, faSignIn } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -21,8 +23,8 @@ export default function NavigationBar() {
         </Link>
       </Nav> 
       <Nav className="ms-auto">
-        <Link to={"register"} className="nav-link">Register</Link>
-        <Link to={"login"} className="nav-link">Login</Link>
+        <Link to={"register"} className="nav-link"><FontAwesomeIcon icon={faRegistered} /> Register</Link>
+        <Link to={"login"} className="nav-link"> <FontAwesomeIcon icon={faSignIn} /> Login </Link>
       </Nav>
     </Navbar>
   );
