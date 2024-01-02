@@ -7,11 +7,30 @@ import { getAuthToken  } from "../api/axiosHelper";
 
 export default function NavigationBar() {
 
+  const isUser = () => {
+    const token = getAuthToken();
+    if (token) {
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+        return decodedToken.role === "USER";
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        return false;
+      }
+    }
+    return false;
+  };
+  
   const isAdmin = () => {
     const token = getAuthToken();
     if (token) {
-      const decodedToken = JSON.parse(atob(token.split(".")[1])); 
-      return decodedToken.role === "ADMIN";
+      try {
+        const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+        return decodedToken.role === "ADMIN";
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        return false;
+      }
     }
     return false;
   };
@@ -23,9 +42,10 @@ export default function NavigationBar() {
       </Link>
 
       <Nav className="mr-auto">
+        {(isUser() || isAdmin()) && 
         <Link to={"add"} className="nav-link">
           Add Note
-        </Link>
+        </Link>}
         {isAdmin() && 
         <Link to={"list"} className="nav-link">
           Note List
@@ -35,8 +55,12 @@ export default function NavigationBar() {
         </Link>}
       </Nav> 
       <Nav className="ms-auto">
-        <Link to={"register"} className="nav-link"><FontAwesomeIcon icon={faRegistered} /> Register</Link>
-        <Link to={"login"} className="nav-link"> <FontAwesomeIcon icon={faSignIn} /> Login </Link>
+      {!isUser() && !isAdmin() && 
+        <Link to={"register"} className="nav-link"><FontAwesomeIcon icon={faRegistered} /> Register</Link>}
+      {!isUser() && !isAdmin() && 
+        <Link to={"login"} className="nav-link"> <FontAwesomeIcon icon={faSignIn} /> Login </Link>}
+      {(isUser() || isAdmin()) && 
+        <Link to={"login"} className="nav-link"> <FontAwesomeIcon icon={faSignIn} /> Logout </Link>}
       </Nav>
     </Navbar>
   );

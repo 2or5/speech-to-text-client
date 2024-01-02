@@ -9,6 +9,7 @@ import {
   faPlus,
   faPlusSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import { getAuthToken  } from '../../api/axiosHelper';
 import CreateNoteToast from "./CreateNoteToast";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -42,8 +43,22 @@ export default class Note extends Component {
   submitNote = (event) => {
     event.preventDefault();
 
+    const userEmail = () => {
+      const token = getAuthToken();
+      if (token) {
+        try {
+          const decodedToken = JSON.parse(atob(token.split(".")[1])); 
+          return decodedToken.sub;
+        } catch (error) {
+          console.error("Error decoding token:", error);
+          return null;
+        }
+      }
+      return null;
+    };
+
     const note = {
-      userId: "65549678dcc07762fc7b5200",
+      email: userEmail(),
       name: this.state.title,
       base64: this.state.baseAudio,
     };
