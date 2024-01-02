@@ -10,6 +10,7 @@ import NoteEdit from "./components/Note/NoteEdit";
 import UserList from "./components/User/UserList";
 import Register from "./components/User/Register";
 import Login from "./components/User/Login";
+import NoteListForUser from "./components/Note/NoteListForUser";
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
               <Route path="/users" element={<UserList />} />
               <Route path="/register" element={<Register />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/list-user-notes" element={<NoteListForUser />} />
             </Routes>
           </Col>
         </Row>
