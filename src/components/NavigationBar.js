@@ -50,9 +50,10 @@ export default function NavigationBar() {
         <Link to={"list"} className="nav-link">
           Note List
         </Link>}
+        {(isUser() || isAdmin()) &&
         <Link to={"list-user-notes"} className="nav-link">
           Your Note List
-        </Link>
+        </Link>}
         {isAdmin() && <Link to={"users"} className="nav-link">
           User List
         </Link>}

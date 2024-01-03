@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faRegistered, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { Row, Col, Card, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { request, setAuthHeader } from '../../api/axiosHelper';
 
@@ -28,6 +28,7 @@ const Login = () => {
     }).then((response) => {
       setAuthHeader(response.data.token);
       navigate("/");
+      window.location.reload();
     }).catch((error) => {
       setAuthHeader(null);
       console.error("Login failed:", error);
@@ -77,6 +78,11 @@ const Login = () => {
               </Form.Group>
             </Card.Body>
             <Card.Footer style={{ textAlign: "right" }}>
+            <Link to="/register">
+              <Button variant="light">
+              <FontAwesomeIcon icon={faRegistered} /> Register
+              </Button>
+            </Link>{' '}
               <Button type="submit" variant="light" disabled={email.length === 0 || password.length === 0}>
                 <FontAwesomeIcon icon={faSignInAlt} /> Login
               </Button>

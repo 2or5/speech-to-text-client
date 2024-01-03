@@ -5,9 +5,11 @@ import axios from "axios";
 import { Card, Form, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  faMicrophone,
   faPaperPlane,
   faPlus,
   faPlusSquare,
+  faStop,
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuthToken  } from '../../api/axiosHelper';
 import CreateNoteToast from "./CreateNoteToast";
@@ -166,8 +168,7 @@ export default class Note extends Component {
                   name="title"
                   value={this.state.title}
                   onChange={this.noteChange}
-                  className={"bg-dark text-white"}
-                  style={{ width: "660px", height: "38px", margin: "auto" }}
+                  style={{ width: "640px", height: "38px", margin: "auto" }}
                   placeholder="Here enter your note name"
                 />
               </Form.Group>
@@ -180,7 +181,6 @@ export default class Note extends Component {
                 <Button
                   name="record"
                   style={{
-                    borderRadius: "45%",
                     marginTop: "25px",
                     width: "250px",
                     height: "50px",
@@ -191,13 +191,12 @@ export default class Note extends Component {
                   onClick={this.start}
                   disabled={this.state.isRecording}
                 >
-                  Record
-                </Button>
+                  <FontAwesomeIcon icon={faMicrophone} /> Record
+                </Button>{' '}
                 <Button
                   name="stopRecord"
                   variant="light"
                   style={{
-                    borderRadius: "45%",
                     marginTop: "25px",
                     width: "250px",
                     height: "50px",
@@ -205,7 +204,7 @@ export default class Note extends Component {
                   onClick={this.stop}
                   disabled={!this.state.isRecording}
                 >
-                  Stop
+                <FontAwesomeIcon icon={faStop} /> Stop
                 </Button>
               </Form.Group>
             </Card.Body>

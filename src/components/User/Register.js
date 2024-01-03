@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faSignInAlt, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faRegistered, faSignInAlt, faUser, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { Row, Col, Card, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { request, setAuthHeader } from '../../api/axiosHelper';
 
@@ -31,6 +31,7 @@ const Register = () => {
     }).then((response) => {
       setAuthHeader(response.data.token);
       navigate("/");
+      window.location.reload();
     }).catch((error) => {
       setAuthHeader(null);
       console.error("Login failed:", error);
@@ -96,8 +97,13 @@ const Register = () => {
               </Form.Group>
             </Card.Body>
             <Card.Footer style={{ textAlign: "right" }}>
+            <Link to="/login">
+              <Button variant="light">
+              <FontAwesomeIcon icon={faSignInAlt} /> Login
+              </Button>
+            </Link>{' '}
               <Button type="submit" variant="light" disabled={email.length === 0 || password.length === 0 || nickName.length === 0}>
-                <FontAwesomeIcon icon={faSignInAlt} /> Register
+                <FontAwesomeIcon icon={faRegistered} /> Register
               </Button>
             </Card.Footer>
           </Form>
